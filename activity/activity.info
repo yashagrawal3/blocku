@@ -1,0 +1,7 @@
+[Activity]
+name = Blocku 
+activity_version = 3
+host_version = 1
+service_name = edu.rit.foss.blocku
+icon = blocku
+exec = sugar-activity activity.VteActivity
