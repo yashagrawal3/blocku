@@ -25,7 +25,21 @@ DEBUG_TERMINAL = False
 class VteActivity(activity.Activity):
     """Activity subclass built around the Vte terminal widget."""
     def __init__(self, handle):
-        import gtk, pango, vte
+        import gtk, pango, platform, sys
+        from ctypes import cdll
+
+        if platform.machine().startswith('arm'):
+            pass # FIXME
+        else:
+            if platform.architecture()[0] == '64bit':
+                vte_path = "x86-64"
+            else:
+                vte_path = "x86"
+            vte = cdll.LoadLibrary("lib/%s/libvte.so.9" % vte_path)
+        sys.path.append("lib/%s" % vte_path)
+
+        import vte
+
         super(VteActivity, self).__init__(handle, create_jobject=False)
         self.__source_object_id = None
 
