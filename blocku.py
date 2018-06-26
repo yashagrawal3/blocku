@@ -782,8 +782,8 @@ class Game:
             #pygame.display.update(allBlocks)
             #pygame.display.flip()
             # Pump GTK messages.
-            while gtk and gtk.events_pending():
-                gtk.main_iteration()
+            while gtk and Gtk.events_pending():
+                Gtk.main_iteration()
 
             keystate = pygame.key.get_pressed()
             # Pump PyGame messages.

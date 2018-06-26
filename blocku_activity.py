@@ -4,14 +4,14 @@ import sys
 import gtk
 import pygame
 
-import sugar.activity.activity
-import sugar.graphics.toolbutton
+import sugar3.activity.activity
+import sugar3.graphics.toolbutton
 
 import sugargame.canvas
 
 import blocku
 
-class BlockuActivity(sugar.activity.activity.Activity):
+class BlockuActivity(sugar3.activity.activity.Activity):
     def __init__(self, handle):
         super(BlockuActivity, self).__init__(handle)
         
@@ -19,7 +19,12 @@ class BlockuActivity(sugar.activity.activity.Activity):
 
         # Create the game instance.
         self.game = blocku.Game()
-
+        self.game.canvas = sugargame.canvas.PygameCanvas(
+                self,
+                main=self.game.make,
+                modules=[pygame.display, pygame.font])
+        self.set_canvas(self.game.canvas)
+        self.game.canvas.grab_focus()  
         # Build the activity toolbar.
         self.build_toolbar()
 
@@ -32,16 +37,16 @@ class BlockuActivity(sugar.activity.activity.Activity):
         self._pygamecanvas.run_pygame(self.game.run)
         
     def build_toolbar(self):        
-        stop_play = sugar.graphics.toolbutton.ToolButton('media-playback-stop')
+        stop_play = sugar3.graphics.toolbutton.ToolButton('media-playback-stop')
         stop_play.set_tooltip(_("Stop"))
         stop_play.set_accelerator(_('<ctrl>space'))
         stop_play.connect('clicked', self._stop_play_cb)
 
-        toolbar = gtk.Toolbar()
+        toolbar = Gtk.Toolbar()
         toolbar.insert(stop_play, 0)
-        toolbar.insert(gtk.SeparatorToolItem(), 1)
+        toolbar.insert(Gtk.SeparatorToolItem(), 1)
         
-        toolbox = sugar.activity.activity.ActivityToolbox(self)
+        toolbox = sugar3.activity.activity.ActivityToolbox(self)
         toolbox.add_toolbar(_("Pygame"), toolbar)
         
         toolbox.show_all()
