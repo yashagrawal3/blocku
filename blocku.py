@@ -13,7 +13,8 @@ from pygame.locals import *
 from pygame import *
 from itertools import chain
 
-try: import gtk
+try:
+    from gi.repository import Gtk
 except ImportError:
     print('gtk error')
     gtk = None
@@ -50,7 +51,6 @@ def display_box(screen, message, x, y, w, h, size):
 	pygame.draw.rect(screen, (0,0,0), rect, 1)
 
 	screen.blit(font.render(message, 1, (0,0,0)), rect.topleft)
-	
 	pygame.display.flip()
 
 def ask(screen, question, x, y, w, h, size, numOnly, limit, allow=True):

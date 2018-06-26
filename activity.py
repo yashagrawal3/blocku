@@ -80,12 +80,6 @@ class VteActivity(activity.Activity):
         self._vte.connect('child-exited', self.on_child_exit)
         self._vte.grab_focus()
         bundle_path = activity.get_bundle_path()
-        # self._pid = self._vte.fork_command \
-        #     (command='/bin/sh',
-        #      argv=['/bin/sh','-c',
-        #      'python %s/blocku.py' % bundle_path],
-        #      envv=["PYTHONPATH=%s/library" % bundle_path],
-        #      directory=bundle_path)
         self._pid = self._vte.spawn_sync(
             Vte.PtyFlags.DEFAULT, bundle_path, [
                 '/bin/sh', '-c', 'python %s/blocku.py' %
